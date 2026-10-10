@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "title": "Assessment pathway guidance",
+    "area": "Lambeth and Southwark (Evelina London community paediatrics), with national NHS and NICE guidance",
+    "last_reviewed": "2026-10-10",
+    "editing_notes": "Each item has a status. Use \"verified\" only when the text is supported by the linked source, checked on the source's verified_on date. Use \"unverified\" for anything not yet checked; it is shown to parents with a clear warning. Do not add contacts, timescales or local targets without an official source."
+  },
+  "sources": {
+    "nhs_how_to_get_diagnosed": {
+      "title": "How to get diagnosed – Autism",
+      "publisher": "NHS website",
+      "url": "https://www.nhs.uk/conditions/autism/getting-diagnosed/how-to-get-diagnosed/",
+      "verified_on": "2026-10-10",
+      "notes": "Page last reviewed 6 May 2026."
+    },
+    "nice_cg128": {
+      "title": "Autism spectrum disorder in under 19s: recognition, referral and diagnosis (CG128) – Recommendations",
+      "publisher": "NICE",
+      "url": "https://www.nice.org.uk/guidance/cg128/chapter/Recommendations",
+      "verified_on": "2026-10-10",
+      "notes": "Guidance last updated 20 December 2017. Recommendations 1.5.1, 1.5.3, 1.5.4, 1.8.1, 1.8.4, 1.8.5 and 1.8.6 used."
+    },
+    "evelina_overview": {
+      "title": "Community paediatrics",
+      "publisher": "Evelina London (Guy's and St Thomas' NHS Foundation Trust)",
+      "url": "https://www.evelinalondon.nhs.uk/our-services/community/community-paediatrics/",
+      "verified_on": "2026-10-10",
+      "notes": "No page review date shown."
+    },
+    "evelina_referrals": {
+      "title": "Community paediatrics referrals",
+      "publisher": "Evelina London (Guy's and St Thomas' NHS Foundation Trust)",
+      "url": "https://www.evelinalondon.nhs.uk/our-services/community/community-paediatrics/referrals.aspx",
+      "verified_on": "2026-10-10",
+      "notes": "No page review date shown."
+    },
+    "evelina_appointments": {
+      "title": "Your child's appointment with the community paediatricians",
+      "publisher": "Evelina London (Guy's and St Thomas' NHS Foundation Trust)",
+      "url": "https://www.evelinalondon.nhs.uk/our-services/community/community-paediatrics/patients.aspx",
+      "verified_on": "2026-10-10",
+      "notes": "No page review date shown."
+    },
+    "evelina_clinics": {
+      "title": "Community paediatrics clinics",
+      "publisher": "Evelina London (Guy's and St Thomas' NHS Foundation Trust)",
+      "url": "https://www.evelinalondon.nhs.uk/our-services/community/community-paediatrics/clinics.aspx",
+      "verified_on": "2026-10-10",
+      "notes": "No page review date shown."
+    }
+  },
+  "route_notes": [
+    {
+      "text": "This is a typical route, not a fixed one. Evelina London looks at each referral individually: it may be passed to the professional best suited to help your child, such as a speech and language therapist or nurse, or to a team in another borough.",
+      "source": "evelina_referrals",
+      "status": "verified"
+    },
+    {
+      "text": "After the initial assessment, depending on the outcome, a child may be referred on to specialist clinics or other services, followed up by the community paediatrics team, or discharged.",
+      "source": "evelina_referrals",
+      "status": "verified"
+    }
+  ],
+  "assessment_vs_diagnosis": [
+    {
+      "text": "Starting an assessment is not the same as receiving a diagnosis. An autism assessment may involve one or more appointments with a team of professionals.",
+      "source": "nhs_how_to_get_diagnosed",
+      "status": "verified"
+    },
+    {
+      "text": "At the end of an Evelina autism assessment, the clinicians decide one of three things: your child has autism, your child does not have autism, or they need more information or time to decide.",
+      "source": "evelina_clinics",
+      "status": "verified"
+    }
+  ],
+  "stages": [
+    {
+      "id": "referral",
+      "title": "Concerns and referral",
+      "summary": "Raising concerns and asking a professional to refer your child.",
+      "what_happens": [
+        {
+          "text": "Speak to a GP to find out how to get an autism assessment in your local area. For children, the school may need to make the referral. If your child is not school age, a health visitor may need to make it.",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        },
+        {
+          "text": "Evelina London community paediatrics accepts referrals for children aged 0 to 18 who are registered with a GP practice in Lambeth or Southwark.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "It takes referrals from Lambeth and Southwark GPs, schools, therapists, community nurses, social services, and parents of children it has already seen.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "For autism referrals, the service asks for clear examples of differences in social communication and social interaction. It cannot accept autism referrals where the only concerns are emotional dysregulation, mental health difficulties or behaviour that challenges.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "The service offers ADHD assessments only for primary school-aged children registered with a Lambeth GP. Other children are directed to CAMHS (South London and Maudsley).",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "In England, you can choose which NHS service does the assessment.",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        }
+      ],
+      "preparation": [
+        {
+          "text": "Note down everyday examples of differences in social communication, such as using words, gestures or facial expressions, or having a back-and-forth conversation.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "Note down everyday examples of differences in social interaction, such as making or keeping friends, or interest in playing with other children.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "Check that your child's GP practice is in Lambeth or Southwark. The service's referral page links to a postcode checker.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        }
+      ],
+      "questions": [
+        {
+          "text": "Who will make the referral: the GP, the school or the health visitor?",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        },
+        {
+          "text": "Which NHS service will the referral go to? Can we choose which service does the assessment?",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        },
+        {
+          "text": "What support is available while we wait?",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        }
+      ],
+      "contacts": [
+        {
+          "text": "Your GP: usually the first person to speak to about a referral.",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        },
+        {
+          "text": "Referrals to Evelina community paediatrics are sent by the referrer, using the service's referral form, to gstt.evelinacommunityreferrals@nhs.net.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "Lambeth community paediatrics admin: 020 3049 5967",
+          "source": "evelina_referrals",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "title": "Referral review",
+      "summary": "The service decides whether to accept the referral.",
+      "what_happens": [
+        {
+          "text": "Doctors review referrals at weekly meetings.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "A referral is then accepted (your child is added to the waiting list), redirected to a more appropriate part of the community paediatrics team, or rejected, with feedback sent to the referrer.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "If a team in another borough is better placed to help, for example for education support, the service will tell the referrer quickly.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "How long a referral review takes, and whether parents are told directly when a referral is accepted, is not stated on the service's pages.",
+          "source": null,
+          "status": "unverified"
+        }
+      ],
+      "preparation": [
+        {
+          "text": "Make sure the service has your current phone number and address. Once a referral is accepted, it will call you to arrange an appointment. If it cannot reach you, it will write, and if it doesn't hear back the referral may be closed.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Look at the service's pages on appointments, clinics and useful websites while the referral is being triaged.",
+          "source": "evelina_referrals",
+          "status": "verified"
+        }
+      ],
+      "questions": [
+        {
+          "text": "Has the referral been accepted, redirected or rejected?",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "If it was redirected or rejected, what feedback went to the referrer, and what are our options now?",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "If we disagree, can we ask for a second opinion?",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        }
+      ],
+      "contacts": [
+        {
+          "text": "Lambeth appointment enquiries: 020 3049 5967",
+          "source": "evelina_overview",
+          "status": "verified"
+        },
+        {
+          "text": "Southwark community paediatrics admin: 0203 049 8029",
+          "source": "evelina_referrals",
+          "status": "verified"
+        },
+        {
+          "text": "Local timescale or target for referral review: not yet confirmed. Ask the service.",
+          "source": null,
+          "status": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "initial_appointment",
+      "title": "Initial paediatric appointment",
+      "summary": "A first appointment with the community paediatric team.",
+      "what_happens": [
+        {
+          "text": "Most first appointments happen in person at a Child Development Centre: the Mary Sheridan Centre in Lambeth or Sunshine House in Southwark. Check your letter for the right centre.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "After the visit, the service writes a report and shares it with you, your child's GP and the person who referred your child. With your permission, it can also be shared with your child's school.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Your child may then be referred for further assessment in one of the service's other clinics, which may be in a different building or at the hospital.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Most children are discharged after their assessments are done and a management plan is in place. A GP or other health professional can refer your child back if new concerns develop.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Typical waiting time from accepted referral to first appointment: no verified local figure or target. The waiting-list figures in this app cover all community paediatric referrals and cannot predict an individual appointment date.",
+          "source": null,
+          "status": "unverified"
+        }
+      ],
+      "preparation": [
+        {
+          "text": "Fill in and return any forms the service sends. It usually asks your child's school or nursery to fill in a form as well.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Bring your child's red book (health record), if you have it.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Bring any recent reports from school, therapists or specialists.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Bring any home videos of unusual movements or behaviours you want to discuss.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Tell your child why they are going and what to expect.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "If you need an interpreter, tell the service which language you speak.",
+          "source": "evelina_appointments",
+          "status": "verified"
+        }
+      ],
+      "questions": [
+        {
+          "text": "What happens next: a referral to another clinic, follow-up with your team, or discharge?",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Has my child been referred for an autism assessment? If so, on what date was the referral made?",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "When will we receive the report, and can it be shared with school?",
+          "source": "evelina_appointments",
+          "status": "verified"
+        }
+      ],
+      "contacts": [
+        {
+          "text": "Mary Sheridan Centre (Lambeth): 020 3049 4005",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Sunshine House (Southwark): 020 3049 8100",
+          "source": "evelina_appointments",
+          "status": "verified"
+        },
+        {
+          "text": "Lambeth appointment enquiries: 020 3049 5967",
+          "source": "evelina_appointments",
+          "status": "verified"
+        }
+      ]
+    },
+    {
+      "id": "specialist_assessment",
+      "title": "Specialist assessment, if referred",
+      "summary": "An autism assessment, for children who are referred on.",
+      "what_happens": [
+        {
+          "text": "NICE recommends starting the autism diagnostic assessment within 3 months of the referral to the autism team. This is a national clinical recommendation, not a local guarantee, and it measures the start of the assessment, not the diagnosis.",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "At Evelina London, the autism assessment clinic appointment lasts about 2 hours and usually involves two clinicians, such as a doctor and a speech therapist, or a psychologist and an autism specialist.",
+          "source": "evelina_clinics",
+          "status": "verified"
+        },
+        {
+          "text": "One clinician does a play-based assessment with your child, usually in a different room, while the other asks you about your child. Sometimes the assessments happen on different days.",
+          "source": "evelina_clinics",
+          "status": "verified"
+        },
+        {
+          "text": "NICE recommends that every child having an autism assessment has a case coordinator: a single point of contact who keeps parents up to date about the likely timing and order of assessments.",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "Which date counts locally as the 'referral to the autism team', and whether this is a separate referral from the original community paediatric referral, is not stated on the service's pages.",
+          "source": null,
+          "status": "unverified"
+        }
+      ],
+      "preparation": [
+        {
+          "text": "For older children, you will be asked what they were like at age 4 or 5. Thinking about that time, or looking at old photos, can help.",
+          "source": "evelina_clinics",
+          "status": "verified"
+        }
+      ],
+      "questions": [
+        {
+          "text": "Who is our case coordinator or single point of contact?",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "What is the likely timing and order of the assessments?",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "How will you share the outcome with us?",
+          "source": "nice_cg128",
+          "status": "verified"
+        }
+      ],
+      "contacts": [
+        {
+          "text": "Lambeth appointment enquiries: 020 3049 5967",
+          "source": "evelina_overview",
+          "status": "verified"
+        },
+        {
+          "text": "Direct contact for the autism assessment clinic: not yet confirmed.",
+          "source": null,
+          "status": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback and next steps",
+      "summary": "Hearing the outcome and agreeing what happens next.",
+      "what_happens": [
+        {
+          "text": "The clinicians share their decision with you and talk about the support available, whatever the outcome.",
+          "source": "evelina_clinics",
+          "status": "verified"
+        },
+        {
+          "text": "NICE recommends discussing the findings in person and without delay, and explaining the reasons for the conclusions even if autism is not diagnosed.",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "NICE recommends giving parents a written report explaining the findings and the reasons for the conclusions, and sharing it with the GP.",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "If you disagree with the result, you can ask the GP or assessment team to refer you to another team for a second opinion.",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        }
+      ],
+      "preparation": [
+        {
+          "text": "Think about which professionals you want information shared with, such as your child's school. NICE says this should happen with your consent.",
+          "source": "nice_cg128",
+          "status": "verified"
+        }
+      ],
+      "questions": [
+        {
+          "text": "When will we receive the written report?",
+          "source": "nice_cg128",
+          "status": "verified"
+        },
+        {
+          "text": "What support is available now, whatever the outcome?",
+          "source": "evelina_clinics",
+          "status": "verified"
+        },
+        {
+          "text": "Can the report be shared with school or other professionals who support our child?",
+          "source": "nice_cg128",
+          "status": "verified"
+        }
+      ],
+      "contacts": [
+        {
+          "text": "Your GP: receives the report and can refer you for a second opinion.",
+          "source": "nhs_how_to_get_diagnosed",
+          "status": "verified"
+        },
+        {
+          "text": "Local support services after assessment: not yet confirmed.",
+          "source": null,
+          "status": "unverified"
+        }
+      ]
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "nice_autism_start_3_months",
+      "clock": "autism",
+      "stage": "specialist_assessment",
+      "months": 3,
+      "kind": "National clinical recommendation",
+      "text": "NICE recommends starting the autism diagnostic assessment within 3 months of the referral to the autism team.",
+      "measures": "From referral to the autism team until the assessment starts. It does not measure time to diagnosis, and it is not a local contractual target.",
+      "source": "nice_cg128",
+      "status": "verified"
+    },
+    {
+      "id": "local_paediatric_first_appointment",
+      "clock": "paediatric",
+      "stage": "initial_appointment",
+      "months": null,
+      "kind": "Local target",
+      "text": "No verified local waiting-time target for a first community paediatric appointment.",
+      "measures": "Not known.",
+      "source": null,
+      "status": "unverified"
+    }
+  ]
+}

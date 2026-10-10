@@ -1,0 +1,15 @@
+[browser]
+# Do not send usage statistics to Streamlit.
+gatherUsageStats = false
+
+[server]
+# Only this computer can open the app (not other devices on your network).
+address = "localhost"
+maxUploadSize = 25
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = false
+
+[theme]
+primaryColor = "#1c5cab"

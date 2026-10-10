@@ -1,0 +1,14 @@
+# Secrets: the app password. Never commit.
+.streamlit/secrets.toml
+
+# Parent-entered information saved by the app. Never commit.
+local_data/
+
+# Python and tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store
