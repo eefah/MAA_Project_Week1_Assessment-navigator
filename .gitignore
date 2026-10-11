@@ -4,6 +4,10 @@
 # Parent-entered information saved by the app. Never commit.
 local_data/
 
+# Private project documents.
+Project 1 overview.rtf
+Submission notes.pages
+
 # Python and tooling
 .venv/
 __pycache__/

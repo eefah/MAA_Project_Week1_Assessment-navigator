@@ -4,7 +4,7 @@ gatherUsageStats = false
 
 [server]
 # Only this computer can open the app (not other devices on your network).
-address = "localhost"
+address = "127.0.0.1"
 maxUploadSize = 25
 
 [client]
@@ -13,3 +13,4 @@ showErrorDetails = false
 
 [theme]
 primaryColor = "#1c5cab"
+baseFontSize = 18

@@ -1,6 +1,6 @@
 """Assessment Navigator – a local prototype for parents.
 
-Run with:  streamlit run app.py
+Run with:  uv run streamlit run app.py
 """
 
 from __future__ import annotations
@@ -15,9 +15,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from navigator import ai
 from navigator import guidance as guidance_mod
 from navigator import personal
-from navigator.auth import is_hosted, require_password
+from navigator.auth import is_hosted, require_password, secret
 from navigator.workbook import (
     Cell,
     ParsedWorkbook,
@@ -29,11 +30,11 @@ from navigator.workbook import (
 APP_DIR = Path(__file__).resolve().parent
 BUNDLED_PATTERN = "Community-health-services-waiting-lists-*.xlsx"
 
-st.set_page_config(page_title="Assessment Navigator", page_icon="🧭", layout="centered")
+st.set_page_config(page_title="Assessment Navigator", page_icon="🧭", layout="wide")
 
 CSS = """
 <style>
-.block-container {padding-top: 2.5rem; padding-bottom: 5rem;}
+.block-container {padding-top: 2.5rem; padding-bottom: 5rem; max-width: 1200px; margin: 0 auto;}
 .an-list {list-style: none; padding-left: 0; margin: 0 0 1.25rem 0;}
 .an-list li {padding: 0.7rem 0; border-bottom: 1px solid rgba(128,128,128,0.2); line-height: 1.6;}
 .an-list li:last-child {border-bottom: none;}
@@ -53,6 +54,7 @@ PROVENANCE = {
     "nhs": ("NHS data", ":material/database:", "blue"),
     "guidance": ("Sourced guidance", ":material/menu_book:", "green"),
     "parent": ("Your information", ":material/person:", "violet"),
+    "ai": ("AI-generated", ":material/smart_toy:", "orange"),
 }
 
 
@@ -347,7 +349,6 @@ def tab_my_child(data: dict[str, Any]) -> None:
 def tab_pathway(data: dict[str, Any]) -> None:
     sources = data["sources"]
     stages = data["stages"]
-    titles = {s["id"]: s["title"] for s in stages}
 
     provenance("guidance")
     st.header("Assessment pathway")
@@ -358,26 +359,20 @@ def tab_pathway(data: dict[str, Any]) -> None:
     st.markdown("**Routes can vary**")
     render_items(data.get("route_notes", []), sources)
 
-    stage_id = st.segmented_control(
-        "Choose a stage",
-        [s["id"] for s in stages],
-        format_func=lambda s: f"{[x['id'] for x in stages].index(s) + 1}. {titles[s]}",
-        default=stages[0]["id"],
-        key="pathway_stage",
-    ) or stages[0]["id"]
-    stage = guidance_mod.stage_by_id(data, stage_id)
-    position = [s["id"] for s in stages].index(stage_id) + 1
-
-    st.subheader(f"Stage {position} of {len(stages)}: {stage['title']}")
-    st.write(stage["summary"])
-    for section, heading in [
-        ("what_happens", "What happens"),
-        ("preparation", "How to prepare"),
-        ("questions", "Questions to ask"),
-        ("contacts", "Service contacts"),
-    ]:
-        st.markdown(f"#### {heading}")
-        render_items(stage[section], sources)
+    st.markdown("**The five stages**")
+    stage_tabs = st.tabs([f"{n}. {stage['title']}" for n, stage in enumerate(stages, start=1)])
+    for position, (stage_tab, stage) in enumerate(zip(stage_tabs, stages), start=1):
+        with stage_tab:
+            st.subheader(f"Stage {position} of {len(stages)}: {stage['title']}")
+            st.write(stage["summary"])
+            for section, heading in [
+                ("what_happens", "What happens"),
+                ("preparation", "How to prepare"),
+                ("questions", "Questions to ask"),
+                ("contacts", "Service contacts"),
+            ]:
+                st.markdown(f"#### {heading}")
+                render_items(stage[section], sources)
 
     with st.container(border=True):
         st.markdown("**Starting an assessment is not the same as a diagnosis**")
@@ -468,7 +463,8 @@ def band_chart(rows: list[tuple[str, str, float]]) -> go.Figure:
     return fig
 
 
-def tab_waiting_list() -> None:
+def tab_waiting_list() -> Optional[tuple]:
+    """Render the tab. Returns (parsed, org, figures, file_origin) when figures are shown."""
     provenance("nhs")
     st.header("Waiting-list picture")
     st.info(
@@ -485,24 +481,24 @@ def tab_waiting_list() -> None:
     )
     bundled = bundled_workbook()
     if uploaded is not None:
-        data, source_label = uploaded.getvalue(), f"Uploaded file: {uploaded.name}"
+        data, source_label, file_origin = uploaded.getvalue(), f"Uploaded file: {uploaded.name}", "uploaded"
     elif bundled is not None:
-        data, source_label = bundled.read_bytes(), f"Bundled workbook: {bundled.name}"
+        data, source_label, file_origin = bundled.read_bytes(), f"Bundled workbook: {bundled.name}", "bundled"
     else:
         st.write("Upload the NHS workbook to see the figures.")
-        return
+        return None
 
     try:
         parsed = cached_parse(data)
     except WorkbookError as exc:
         st.error(str(exc))
-        return
+        return None
 
     errors = [c for c in parsed.checks if c.status == "error"]
     warnings = [c for c in parsed.checks if c.status == "warning"]
     if errors:
         st.error("This workbook could not be used:\n\n" + "\n".join(f"- {c.message}" for c in errors))
-        return
+        return None
     for check in warnings:
         st.warning(check.message)
 
@@ -518,6 +514,7 @@ def tab_waiting_list() -> None:
         index=keys.index(default.key) if default else 0,
         format_func=lambda k: by_key[k].label,
         help="Guy's and St Thomas' runs Evelina London community paediatrics.",
+        key="provider_key",
     )
     org = by_key[chosen_key]
     figures = parsed.figures_for(org)
@@ -559,7 +556,12 @@ def tab_waiting_list() -> None:
         st.caption("Not shown in the chart (no reported number): " + "; ".join(not_plotted) + ".")
 
     band_sum = figures.band_sum()
-    if band_sum is not None and figures.total is not None and figures.total.is_number:
+    if band_sum is None or figures.total is None or not figures.total.is_number:
+        st.caption(
+            "Comparing the bands with the total is incomplete, because the total or one or more "
+            "bands is not a reported number."
+        )
+    else:
         if band_sum == figures.total.value:
             st.caption("The waiting-time bands add up to the total.")
         else:
@@ -615,24 +617,145 @@ def tab_waiting_list() -> None:
         for check in parsed.checks:
             st.markdown(f"- {check.message}")
 
+    return parsed, org, figures, file_origin
 
-# ---------------------------------------------------------------- AI placeholder
+
+# ---------------------------------------------------------------- tab 4: AI assistant
+
+def md_escape(text: str) -> str:
+    """Show workbook text literally in Markdown."""
+    return re.sub(r"([\\`*_{}\[\]()#+\-.!|<>~])", r"\\\1", text)
 
 
-def ai_placeholder() -> None:
-    st.divider()
-    with st.container(border=True):
-        st.markdown("**Ask a question – coming later**")
+def reset_chat() -> None:
+    st.session_state["ai_explanation"] = None
+    st.session_state["ai_history"] = []
+
+
+def ask_groq(api_key: str, model: str, messages: list[dict[str, str]]) -> Optional[str]:
+    """Call Groq. Shows a friendly error and returns None on failure."""
+    try:
+        with st.spinner("Asking Groq…"):
+            return ai.complete(ai.make_client(api_key), model, messages)
+    except ai.AIError as exc:
+        st.error(str(exc))
+        return None
+
+
+def tab_ai(selection: Optional[tuple], data: Optional[dict[str, Any]]) -> None:
+    provenance("ai")
+    st.header("AI assistant")
+    st.write(
+        "Get a plain-English explanation of the waiting-list figures, then ask follow-up questions. "
+        "Answers use only the NHS figures and sourced guidance in this app."
+    )
+    st.info(
+        "When you use this tab, the public NHS figures for the selected provider, the sourced "
+        "guidance and the questions you type are sent to **Groq**, an external AI service. "
+        "Nothing from *My child's next steps* is sent.\n\n"
+        "Please don't type your child's name, date of birth, NHS number or anything else that "
+        "could identify your family."
+    )
+
+    api_key = str(secret("GROQ_API_KEY", "") or "").strip()
+    model = str(secret("GROQ_MODEL", "") or "").strip() or ai.DEFAULT_MODEL
+    if not api_key:
+        st.warning(
+            "The AI assistant isn't set up yet. The other tabs work without it.\n\n"
+            "To turn it on, open `.streamlit/secrets.toml`, paste your Groq API key between the "
+            "quotes after `GROQ_API_KEY =`, save the file and restart the app."
+        )
+        return
+    if data is None:
+        st.warning("The guidance file couldn't be loaded, so the assistant is unavailable.")
+        return
+    if selection is None:
+        st.write("Load a valid NHS workbook on the **Waiting-list picture** tab first.")
+        return
+
+    parsed, org, figures, file_origin = selection
+    try:
+        context = ai.build_context(parsed, org, figures, data, file_origin)
+    except ai.AIError as exc:
+        st.error(str(exc))
+        return
+
+    new_id = ai.context_id(context)
+    if st.session_state.get("ai_context_id") != new_id:
+        had_chat = bool(st.session_state.get("ai_explanation") or st.session_state.get("ai_history"))
+        st.session_state["ai_context_id"] = new_id
+        reset_chat()
+        if had_chat:
+            st.info("New context: the provider or dataset changed, so the chat has restarted.")
+
+    st.markdown("**Context for this conversation**")
+    c1, c2, c3 = st.columns(3)
+    c1.markdown(f"Provider  \n**{md_escape(context['provider']['name'])}**")
+    c2.markdown(f"Service  \n**{md_escape(context['service'])}**")
+    c3.markdown(f"Reporting month  \n**{md_escape(context['dataset']['reporting_month'])}**")
+    st.caption("To change the provider, use the Waiting-list picture tab.")
+
+    with st.expander("What is sent to Groq"):
         st.caption(
-            "Placeholder for a future feature. A later version may answer questions using only "
-            "the NHS data and sourced guidance in this app, with links to sources. "
-            "It is switched off: nothing is sent to any AI service."
+            "This is the information the assistant receives, along with your questions. "
+            "All figures were calculated in Python."
         )
-        st.text_input(
-            "Your question",
-            placeholder="For example: does this data include autism assessments?",
-            disabled=True,
+        st.json(context, expanded=False)
+
+    if st.button("Generate explanation", type="primary", icon=":material/auto_awesome:"):
+        answer = ask_groq(api_key, model, ai.explanation_messages(context))
+        if answer:
+            st.session_state["ai_explanation"] = answer
+
+    explanation = st.session_state.get("ai_explanation")
+    if explanation:
+        with st.container(border=True):
+            st.markdown(f"**Explanation: {md_escape(context['provider']['name'])}, "
+                        f"{md_escape(context['dataset']['reporting_month'])}**")
+            st.markdown(explanation)
+            st.caption(
+                "AI-generated from the figures and guidance shown in this app. It may contain "
+                "mistakes, so check important points with the service."
+            )
+
+    st.subheader("Ask a follow-up question")
+    history: list[dict[str, str]] = st.session_state.get("ai_history", [])
+    for message in history:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    asked = len(history) // 2
+    if asked >= ai.MAX_FOLLOW_UPS:
+        st.info(f"You've asked {ai.MAX_FOLLOW_UPS} questions in this chat. Start a new chat to ask more.")
+    else:
+        question = st.chat_input(
+            "Ask about these figures or the assessment pathway",
+            max_chars=ai.MAX_QUESTION_CHARS,
+            key="ai_chat_input",
         )
+        if question:
+            try:
+                messages = ai.chat_messages(context, explanation, history, question)
+            except ai.AIError as exc:
+                st.error(str(exc))
+            else:
+                answer = ask_groq(api_key, model, messages)
+                if answer:
+                    history.extend(
+                        [{"role": "user", "content": question.strip()},
+                         {"role": "assistant", "content": answer}]
+                    )
+                    st.session_state["ai_history"] = history
+                    st.rerun()
+        st.caption(
+            f"Questions can be up to {ai.MAX_QUESTION_CHARS} characters. "
+            f"{ai.MAX_FOLLOW_UPS - asked} of {ai.MAX_FOLLOW_UPS} questions left in this chat."
+        )
+
+    if explanation or history:
+        if st.button("Start a new chat", icon=":material/restart_alt:"):
+            reset_chat()
+            st.rerun()
 
 
 # ---------------------------------------------------------------- main
@@ -654,8 +777,8 @@ def main() -> None:
         data = None
         guidance_problem = str(exc)
 
-    my_child, pathway, waiting = st.tabs(
-        ["My child's next steps", "Assessment pathway", "Waiting-list picture"]
+    my_child, pathway, waiting, assistant = st.tabs(
+        ["My child's next steps", "Assessment pathway", "Waiting-list picture", "AI assistant"]
     )
     with my_child:
         if data is None:
@@ -668,9 +791,9 @@ def main() -> None:
         else:
             tab_pathway(data)
     with waiting:
-        tab_waiting_list()
-
-    ai_placeholder()
+        selection = tab_waiting_list()
+    with assistant:
+        tab_ai(selection, data)
 
 
 main()

@@ -1,0 +1,24 @@
+[project]
+name = "assessment-navigator"
+version = "0.1.0"
+description = "Helps parents understand community paediatric waiting lists and navigate a neurodevelopmental assessment."
+requires-python = ">=3.13"
+dependencies = [
+    "groq>=1.7.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.6",
+    "plotly>=7.1.0",
+    "streamlit>=1.65.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.uv]
+# An application, not a library: nothing to build or install as a package.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

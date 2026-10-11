@@ -12,7 +12,7 @@ from typing import Any
 import streamlit as st
 
 
-def _secret(name: str, default: Any = None) -> Any:
+def secret(name: str, default: Any = None) -> Any:
     try:
         return st.secrets.get(name, default)
     except Exception:  # no secrets file at all
@@ -20,7 +20,7 @@ def _secret(name: str, default: Any = None) -> Any:
 
 
 def is_hosted() -> bool:
-    return str(_secret("HOSTED", False)).strip().lower() in {"true", "1", "yes"}
+    return str(secret("HOSTED", False)).strip().lower() in {"true", "1", "yes"}
 
 
 def require_password() -> None:
@@ -28,7 +28,7 @@ def require_password() -> None:
     if st.session_state.get("authenticated"):
         return
 
-    expected = str(_secret("APP_PASSWORD", "") or "")
+    expected = str(secret("APP_PASSWORD", "") or "")
     st.title("Assessment Navigator")
     if not expected:
         st.warning(
